@@ -52,7 +52,7 @@
             pointer-events: auto;
         }
 
-        /* Custom Scrollbar */
+        /* Custom Scrollbar for Red Theme */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -60,7 +60,7 @@
             background: #f1f1f1; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #991b1b; 
+            background: #991b1b; /* สีแดงเข้ม */
             border-radius: 4px;
         }
         
@@ -81,10 +81,10 @@
     <header class="w-full bg-white shadow-md py-4 px-6 text-center border-b-4 border-red-800 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
         <div class="max-w-4xl mx-auto z-10 relative">
-            <h1 class="text-2xl md:text-3xl font-bold text-red-900 temple-header mb-1">
+            <h1 class="text-3xl md:text-4xl font-bold text-red-900 temple-header mb-1">
                 <i class="fas fa-vihara mr-2"></i>วัดบุญศรีมุนีกรณ์
             </h1>
-            <p class="text-base text-gray-500">อ่านใบเซียมซีออนไลน์</p>
+            <p class="text-lg text-gray-500">อ่านใบเซียมซีออนไลน์</p>
         </div>
     </header>
 
@@ -92,6 +92,7 @@
         
         <!-- หน้าจอเลือกเลข (Selection Screen) -->
         <div id="start-screen" class="text-center w-full transition-all duration-300">
+            
             <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl shadow-xl border border-red-100 mb-8 relative overflow-hidden">
                 <!-- ลวดลายพื้นหลัง -->
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-100 rounded-full opacity-50"></div>
@@ -102,15 +103,15 @@
                         <i class="fas fa-list-ol"></i>
                     </div>
 
-                    <h2 class="text-2xl font-semibold text-gray-700 mb-2">เลือกหมายเลขเซียมซี</h2>
-                    <p class="text-gray-500 text-base mb-6">กดเลือกตามเลขที่ท่านเสี่ยงทายได้</p>
+                    <h2 class="text-3xl font-semibold text-gray-700 mb-2">เลือกหมายเลขเซียมซี</h2>
+                    <p class="text-gray-500 text-lg mb-6">กดเลือกตามเลขที่ท่านเสี่ยงทายได้</p>
 
                     <!-- แผงปุ่มตัวเลข 1-28 -->
                     <div id="number-grid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-4 mb-4">
                         <!-- ปุ่มจะถูกสร้างโดย JavaScript -->
                     </div>
                     
-                    <p id="error-msg" class="text-red-500 text-base mt-3 hidden bg-red-50 p-3 rounded-lg border border-red-200">
+                    <p id="error-msg" class="text-red-500 text-lg mt-3 hidden bg-red-50 p-3 rounded-lg border border-red-200">
                         <i class="fas fa-exclamation-circle"></i> ยังไม่มีข้อมูลสำหรับเลขนี้
                     </p>
                 </div>
@@ -118,50 +119,52 @@
 
             <!-- ข้อความเตือนใจ -->
             <div class="mt-4 p-5 bg-red-50 border-l-4 border-red-700 rounded-r-lg text-left shadow-sm max-w-md mx-auto">
-                <p class="text-sm text-red-900 italic">
+                <p class="text-base text-red-900 italic">
                     "ทุกสิ่งล้วนเป็น อนิจัง ไม่แน่นอน<br>คำทำนายเป็นเพียงแนวทาง ให้ใช้สติในการดำเนินชีวิต"
                 </p>
             </div>
         </div>
 
-        <!-- หน้าจอแสดงผลลัพธ์ (สำหรับการดูบนหน้าจอ) -->
+        <!-- หน้าจอแสดงผลลัพธ์ -->
         <div id="result-screen" class="hidden w-full max-w-xl mx-auto">
-            <div class="result-card bg-white rounded-2xl shadow-2xl overflow-hidden border border-red-200 relative">
+            <!-- เพิ่ม ID ให้กับ Card เพื่อใช้ในการ Capture -->
+            <div id="capture-area" class="result-card bg-white rounded-2xl shadow-2xl overflow-hidden border border-red-200 relative">
                 <!-- ส่วนหัวใบเซียมซี -->
                 <div class="bg-red-800 p-8 text-center text-white relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/thai-pattern.png')]"></div>
-                    <p class="text-lg opacity-90 mb-2">ใบเซียมซีที่</p>
-                    <h2 id="result-number" class="text-7xl font-bold temple-header">--</h2>
+                    <p class="text-xl opacity-90 mb-2">ใบเซียมซีที่</p>
+                    <h2 id="result-number" class="text-8xl font-bold temple-header">--</h2>
                 </div>
 
                 <!-- เนื้อหาคำทำนาย -->
                 <div class="p-8 text-center">
                     
                     <!-- ปุ่มเล่นเสียง -->
-                    <div id="audio-container" class="hidden mb-6 flex justify-center no-print">
-                        <button id="play-btn" onclick="toggleAudio()" class="flex items-center gap-3 bg-red-100 text-red-800 hover:bg-red-200 px-6 py-3 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-sm border border-red-200">
-                            <i class="fas fa-volume-up text-xl"></i>
+                    <div id="audio-container" class="hidden mb-8 flex justify-center no-print">
+                        <button id="play-btn" onclick="toggleAudio()" class="flex items-center gap-3 bg-red-100 text-red-800 hover:bg-red-200 px-8 py-4 rounded-full font-bold text-xl transition-all transform hover:scale-105 shadow-sm border border-red-200">
+                            <i class="fas fa-volume-up text-2xl"></i>
                             <span>ฟังคำทำนาย</span>
                         </button>
                         <audio id="audio-player" onended="audioEnded()" onerror="audioError()"></audio>
                     </div>
 
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-red-900 mb-4 temple-header">ความหมาย</h3>
-                        <!-- ใช้ whitespace-pre-line เพื่อให้เว้นบรรทัดตามข้อมูลจริง -->
-                        <p id="result-text" class="text-gray-700 leading-relaxed text-xl font-medium whitespace-pre-line">
+                    <div class="mb-8">
+                        <h3 class="text-3xl font-bold text-red-900 mb-6 temple-header">ความหมาย</h3>
+                        <p id="result-text" class="text-gray-700 leading-loose text-2xl md:text-3xl font-medium whitespace-pre-line">
                             กำลังโหลดคำทำนาย...
                         </p>
                     </div>
                     
-                    <div class="w-full h-px bg-gray-200 my-6 no-print"></div>
+                    <div class="w-full h-px bg-gray-200 my-8 no-print"></div>
 
                     <!-- ปุ่ม Action ต่างๆ -->
                     <div class="flex flex-col gap-4 no-print">
+                        <!-- ปุ่มบันทึกรูปภาพ -->
                         <button id="save-img-btn" onclick="saveResultImage()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-6 rounded-xl shadow-md transition flex items-center justify-center gap-3 text-xl transform active:scale-95">
                             <i class="fas fa-camera"></i> บันทึกใบเซียมซี
                         </button>
 
+                        <!-- ปุ่มกลับ -->
                         <button onclick="resetSiamsi()" class="text-red-700 font-semibold hover:text-red-900 transition flex items-center justify-center mx-auto gap-2 py-3 px-6 rounded-lg hover:bg-red-50 w-full text-lg">
                             <i class="fas fa-chevron-left"></i> กลับไปหน้าเลือกเลข
                         </button>
@@ -172,7 +175,7 @@
 
     </main>
     
-    <!-- ส่วนแม่พิมพ์สำหรับบันทึกภาพ (Paper Template) - ซ่อนไว้ไม่ให้เห็นบนหน้าจอ -->
+    <!-- ส่วนแม่พิมพ์สำหรับบันทึกภาพ (Paper Template) -->
     <div id="paper-siamsi" style="position: absolute; left: -9999px; top: 0; width: 800px; background-color: #fffaf0; padding: 60px; border: 20px double #7f1d1d; text-align: center; color: #333;">
         <div style="margin-bottom: 20px; color: #991b1b;">
             <i class="fas fa-vihara" style="font-size: 60px;"></i>
@@ -186,8 +189,7 @@
         </div>
 
         <div style="padding: 20px 40px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-            <!-- ปรับ line-height ให้ห่าง และ font-size ให้ใหญ่พอดี -->
-            <p id="paper-text" style="font-family: 'Sarabun', serif; font-size: 32px; line-height: 2.0; font-weight: 500; color: #1f2937; white-space: pre-line;">
+            <p id="paper-text" style="font-family: 'Sarabun', serif; font-size: 32px; line-height: 1.8; font-weight: 500; color: #1f2937; white-space: pre-line;">
                 ข้อความคำทำนาย...
             </p>
         </div>
@@ -196,13 +198,10 @@
              <p style="font-family: 'Prompt', sans-serif; font-size: 20px; color: #991b1b; font-style: italic;">
                 "ทุกสิ่งล้วนเป็น อนิจัง ไม่แน่นอน ให้ใช้สติในการดำเนินชีวิต"
             </p>
-             <p style="font-family: 'Prompt', sans-serif; font-size: 18px; color: #888; margin-top: 10px;">
-                www.watboonsri.com
-            </p>
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer พร้อมปุ่ม QR Code -->
     <footer class="w-full py-6 text-center text-gray-400 text-sm bg-white border-t border-gray-100 flex flex-col items-center gap-3">
         <p>© วัดบุญศรีมุนีกรณ์ | พัฒนาด้วย ❤️ เพื่อพระพุทธศาสนา</p>
         <button onclick="toggleQRCode()" class="text-red-700 hover:text-red-900 transition flex items-center gap-2 text-sm border border-red-200 px-4 py-2 rounded-full hover:bg-red-50">
@@ -210,7 +209,7 @@
         </button>
     </footer>
 
-    <!-- QR Code Modal -->
+    <!-- QR Code Modal (Popup) -->
     <div id="qr-modal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
         <div class="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl relative">
             <button onclick="toggleQRCode()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
@@ -229,7 +228,7 @@
     <script>
         const TOTAL_NUMBERS = 28;
 
-        // ข้อมูลคำทำนาย
+        // ข้อมูลคำทำนาย ครบ 28 ใบ
         const predictions = [
             {
                 number: 1,
@@ -238,7 +237,7 @@
             },
             {
                 number: 2,
-                text: "ใบที่สอง นั้นยังไม่สู้ดี ต้องระวังกายใจ\nจะทำการสิ่งใด ให้รอบคอบไว้หนา\nถามหาลาภ ยังมิได้มา\nถามหาคู่ ยังต้องรอเวลา\nให้หมั่นทำบุญ สร้างกุศล ผลบุญจะช่วยหนุนนำ\nให้ผ่านพ้นอุปสรรคไปได้",
+                text: "ใบที่สองต้องกันเหมือนจันทร์ฉาย เปรียบกับต้น พฤกษาคราที่ตาย\nแล้วกลับกลายได้เป็นเหมือนเช่นเดิม\nได้ผลิดอกออกใบไสวสว่าง ต้องนําค้างลมเชยรําเพย เสริม\nเหมือนกระจกบานเก่าเมือคราวเดิม ต้องเพิ่มเติม ขัดถูจึงดูงาม\nจะท่าการสิ่งใดพร้อมใจกัน จงผ่อนผัน หารือนับถือถาม\nคงสมจิตสมปองท่านองความ ไบน้ ถามคนไข้ว่าได้คลาย\nถามลูกหนี้พวกพ้องว่าต้องพบ ถามเรื่องคูรู้บไม่สมหมาย\nถามหาลาภว่าดีพาทีทาย จบภิปรายเลขสองทํานอง เอย ฯ",
                 audio: "ใบที่สอง.mp3"
             },
             {
@@ -251,7 +250,7 @@
                 text: "ใบที่สี่ชี้ชัดความพลัดพราก เหมือนต้องจากคู่ไป ไกลสถาน\nดังลูกไก่พลัดวงหลงไปนาน กว่าจะพานพบหน้าก็ช้าจัง\nต้องอุตสาห์อดกลั้นถึงนานหน่อย แล้วจึงค่อยเป็นสุขในยุคหลัง\nจงประคองตนไว้อย่าให้พลั้ง ดวงจิตตั้งหวังสมานสามัคคี\nเร่งนอบนบเคารพอยู่ที่ผู้ใหญ่ คอยตามไปใช้พินิจกิจวิถี\nเหมือนดวงจันทร์ส่องฟ้าในราตรี เมื่อแสงศรีสุริยันตะวันรอน\nถามถึงไข้ว่าคงหาย ได้สําราญ ความโรงศาลมีชัยไม่หลอกหลอน\nยังไม่พบลูก หนี้ที่หนีจร ในอุทรบุตรเป็นชายคำทำนาย เอย ฯ",
                 audio: "ใบที่สี่.mp3"
             },
-             {
+            {
                 number: 5,
                 text: "ใบที่ห้าว่าไว้ให้เห็นชัด อย่าอึดอัดอกใจไปเลยหนอ\nไม่ควรคิดเกินเขตเหตุไม่พอ ไม่มีข้อคิดร้ายในตัวใคร\nการทุกข์ใจไปเปล่าไม่เข้าการ ถือโบราณท่ำนองจะผ่องใส\nจะคบคนดูหน้าอย่าเบาใจ อย่าโลภมากอยากได้ของเขามา\nแม้นถามหาเนื้อคู่อยู่ไกลครัน ยังไม่ได้สมหวังจงยั้ง คิด\nจะตามติดลูกหนี้ที่ผายผัน ทายว่าจะไม่พบประสบกัน\nส่วนลาภนั้นได้ยากลําบากจริง กว่าจะได้ก็เห็นลำเค็ญสุด\nส่วนว่าบุตรในครรภ์นั้นเป็นหญิง เร่งเชื่อกรรมทําดีเป็นที่อิง\nประกอบกิจสุจริตยิ่งเป็นนิตย์ เอยฯ",
                 audio: "ใบที่ห้า.mp3"
@@ -311,10 +310,14 @@
                 text: "ที่สิบหกตกโฉลกโชคที่เหมาะ ได้เฉพาะใบนี้ดีนักหนา\nจะอยู่เย็นเป็นสุขทุกเวลา ไปภายหน้าสุขล้วนควรจดจำ\nทั้งกายใจเปล่งปลั่งไม่กังวล จะได้ยลผู้ชุปอุปถัมภ์\nเขาเมตตาอารีมีประจำ จะแนะนำชักจงพยุงตัว\nถามหาคู่ชูใจเป็นได้แน่ ประเสริฐแท้ไม่เสียเรื่องเมียผัว\nได้เจริญ สุขังทั้งครอบครัว อย่าเมามัวทุกข์ร้อนเฝ้าถอนใจ\nเรื่องงลาภผลสมหวังเหมือนดังจิต บุญฤทธิ์ตามสนองคงผ่องใส\nความคดีนี้เห็นไม่เป็นไร ชนะได้แน่นักทักทาย เอย ฯ",
                 audio: "ใบที่สิบหก.mp3"
             },
-            // ใบที่ 17 ยังไม่มี
+            {
+                number: 17,
+                text: "ที่สิบเจ็ดมีกรรมมาตามติด จะทํากิจเคืองขุ่นดุหันหัน\nกลับหาร้ายไส่ตัวชั่วสําคัญ คิดหมายมั่นว่าดีกลับมีทราม\nจงหมั่นเล็งเพ่งพิศพินิจเหตุ คอยสังเกตให้ทราบอย่าหยาบหยาม\nเห็นดีแท้แล้วจงทํากรรมที่งาม จะสมความคิดไว้ได้สบาย\nเร่งรักตัวกลัวผิดคิดให้มาก สงบปากกายใจให้เหลือหลาย\nถามถึงคนเจ็บไข้ว่าได้คลาย โรคจะหายคืนวันเป็นอันดี\nแม้นเป็นความตามมีคดีสู้ จงเร่งรู้มีชัยไม่เสียศรี\nในส่วนลาภแสนเลิศจะเกิดมี ถามลูกหนี้ใดๆ ไม่พบ เอยฯ",
+                audio: "ใบที่สิบเจ็ด.mp3"
+            },
             {
                 number: 18,
-                text: "ที่สิบแปดเห็นเหมือนเช่นทรัพย์ อยู่ติดกับศิลาที่อาศัย\nจะหาผลแสนยากลำบากใจ หาเท่าไรยากนักจักสมปอง\nเหมือนพายเรือแล่นสวนทวนพายุ กว่าจะลุยาก ตัวแสนมัวหมอง\nต้องอุดฝืนกลืนกล่าในท่ำนอง จง ประคองกิจการให้นานไป\nคงสำเร็จเสร็จพลันในวันหนึ่ง อย่ารําพึงเบียงบิดคิดไถล\nแม้นถามคนเศร้าโศกมีโรคภัย จะหายได้แน่ชัดเป็นสัจจา\nแม้นจิตตั้งหวังลาภจงทราบ เสร็จ ไม่สําเร็จสมหวังอย่ากังขา\nแม้นเป็นความแพ้ยับอับปัญญา กุมาราบุตรชายไนครรภ์ เอย ฯ \n\n(ใครเสี่ยงได้ไบนี้ต้องไปท่าบุญ เคราะห์ร้ายจะกลายเป็นดี)",
+                text: "ที่สิบแปดเห็นเหมือนเช่นทรัพย์ อยู่ติดกับศิลาที่อาศัย\nจะหาผลแสนยากลำบากใจ หาเท่าไรยากนักจักสมปอง\nเหมือนพายเรือแล่นสวนทวนพายุ กว่าจะลุยาก ตัวแสนมัวหมอง\nต้องอุดฝืนกลืนกล่าในท่ำนอง จง ประคองกิจการให้นานไป\nคงสำเร็จเสร็จพลันในวันหนึ่ง อย่ารําพึงเบียงบิดคิดไถล\nแม้นถามคนเศร้าโศกมีโรคภัย จะหายได้แน่ชัดเป็นสัจจา\nแม้นจิตตั้งหวังลาภจงทราบ เสร็จ ไม่สําเร็จสมหวังอย่ากังขา\nแม้นเป็นความแพ้ยับอับปัญญา กุมาราบุตรชายไนครรภ์ เอย ฯ\n(ใครเสี่ยงได้ไบนี้ต้องไปท่าบุญ เคราะห์ร้ายจะกลายเป็นดี)",
                 audio: "ใบที่สิบแปด.mp3"
             },
             {
@@ -324,8 +327,48 @@
             },
             {
                 number: 20,
-                text: "ที่ยี่สิบกลอกกลับความนับถือ ไม่สัตย์ชื่อแท้จริง ในสิ่งสาร์\nถ้ามั่นคงตรงสิ้นในวิญญาณ์ จะมีท่าสมหวังเหมือนดังใจ\nเร่งระวังกายาให้สามารถ ด้วยเขาขาดผู้พิงอิงอาศัย\nเป็นคราวเคราะห์เพราะกรรมจะชําใจ จงแก้ไข เร่งทําตามพิธี\nตามประทีปจุดอยู่ที่บูชา น้ำมันหาเติมใส่ให้เรืองศรี\nจะสะเดาะเคราะห์ร้ายหายเป็นดี บังเกิดมีคุณ งามตามอารมณ์\nถามโรคาว่าทุเลาเบาทีสุด จะขอบุตร บอกได้ว่าไม่สม\nแม้นถามลาภเปล่าไปไม่ได้ชม บอกคารมความทีสู้ดูดี เอย ฯ\n\n(ใครเสี่ยงได้ไบนี้ต้องไปท่าบุญ เคราะห์ร้ายจะกลายเป็นดี)",
+                text: "ที่ยี่สิบกลอกกลับความนับถือ ไม่สัตย์ชื่อแท้จริง ในสิ่งสาร์\nถ้ามั่นคงตรงสิ้นในวิญญาณ์ จะมีท่าสมหวังเหมือนดังใจ\nเร่งระวังกายาให้สามารถ ด้วยเขาขาดผู้พิงอิงอาศัย\nเป็นคราวเคราะห์เพราะกรรมจะชําใจ จงแก้ไข เร่งทําตามพิธี\nตามประทีปจุดอยู่ที่บูชา น้ำมันหาเติมใส่ให้เรืองศรี\nจะสะเดาะเคราะห์ร้ายหายเป็นดี บังเกิดมีคุณ งามตามอารมณ์\nถามโรคาว่าทุเลาเบาทีสุด จะขอบุตร บอกได้ว่าไม่สม\nแม้นถามลาภเปล่าไปไม่ได้ชม บอกคารมความทีสู้ดูดี เอย ฯ\n(ใครเสี่ยงได้ไบนี้ต้องไปท่าบุญ เคราะห์ร้ายจะกลายเป็นดี)",
                 audio: "ใบที่ยี่สิบ.mp3"
+            },
+            {
+                number: 21,
+                text: "ใบที่ยี่สิบเอ็ดอย่าพะวังนึกกังขา เปรียบเหมือนเรา นั่งอยู่ในนาวา\nแล้วแล่นฝ่าคลื่นลมระบมไป อันโชคลาภ บั้นหนายังว่าขัด\nยังอึดอัดมิเห็นหนทางได้ รออีกหน่อย จะสุขสนุกใจ\nคงรวยใหญ่ยิ่งเกษมเปรมปรีดี ถามคนเจ็บ ว่าหายสบายจิต\nถามจะคิดสู้ความให้คร้ามหนี ถามหาคู่บตรไซร้ยังไม่มี\nขอจบทีที่คำทำนาย เอย ฯ\nโชคของท่านเวลานี้ยังไม่ดีต่อไปจึงจะดีแล",
+                audio: "ใบที่ยี่สิบเอ็ด.mp3"
+            },
+            {
+                number: 22,
+                text: "ที่ยี่สิบสองต้องฟังอย่าบังอาจ อวดฉลาดไม่ดีจะมีเขลา\nจะทำกิจสิ่งใดอย่าใจเบา อุตส่าห์เฝ้าเรียนหาปรึกษางาน\nท่านผู้รู้ชี้แจงแสดงบท จงจำจดให้แม่นเป็นแก่นสาร\nผู้ไหญ่อาบน้ำร้อนมาก่อนกาล ถือโบราณไว้บ้างก็ยังดี\nถามโรคาว่าเบาทุเลาแน่ เป็นความแพ้ดูท่าต้องล่าหนี\nถามถึงลาภก็ประเสริฐเกิดมากมี ยิ่งทวีขึ้นทุกวันเป็น มั่นคง\nหวังประสบพบใครได้สมคิด จะเชยชิดคู่ชม สมประสงค์\nใครขอได้ใบนี้ต้องชี้ตรง อย่าใหลหลงดี เหลือเชื่อเถิด เอย ฯ",
+                audio: "ใบที่ยี่สิบสอง.mp3"
+            },
+            {
+                number: 23,
+                text: "ที่ยี่สิบสามงามสิ้นระบิลศัพท์จะได้รับสุขดีไม่มีสอง\nญาติกาสามัคคีมีปรองดอง ใครจะต้องเจ็บไข้เป็นได้คลาย\nทั้งครอบครัวทั่วหน้าล้วนผาสุก ไม่มีทุกข์บุญเจืออยู่เหลือหลาย\nลาภจะมีดีงามดังคำทาย แสนง่ายดายอยู่หลังหน ทางไกล\nแม้นถามไข้ว่าคลายหายสนิท ไม่ปกปิดบอกตาม เนื้อความไข\nถ้าต่อสู้ในคดีคงมีไชยชนะได้เพราะว่าชะตาดี\nเนื้อความชัดจัดบ่งที่ตรงลาภ จงเร่งทราบว่าเลิศประเสริฐ ศรี\nทุกสิ่งสมใจไม่ราคี ขอจบไว้ใบนี้ดีนัก เอย ฯ",
+                audio: "ใบที่ยี่สิบสาม.mp3"
+            },
+            {
+                number: 24,
+                text: "ที่ยี่สิบสี่นี้ว่าช้าๆ หน่อย จึงจะค่อยเสร็จงานใน ความหวัง\nผลที่ไกลจะใคร่รู้จงดูฟัง คิดยับยั้งรอไปได้ สมปอง\nอย่าหนหันเหิมฮึกนึกประมาท จักอนาถนอน เพลียเสียข้าวของ\nแม้นรอไว้เหมือนว่าได้ม้าทอง ตาม ทํานองอุปมาบรรดามี\nจะได้พบอุปถัมภ์บํารุงรัก ประเสริฐ ศักดิ์ชี้ช่องให้ผ่องศรี\nอย่าเดือดเนื้อร้อนใจไปไยมี ช้าๆ ดีเร็วด่วนไม่ควรการ\nธุระอยู่ยังหนทางไปไม่มีภัยทั่วสิ้น ถิ่นสถาน\nโรคที่หนักจักหายไม่วายปราณ ถึงเป็นนานหาย หนอจะขอทาย\nเรื่องลาภยศมีดอกจะบอกให้ ต่อนาน ไปคงจะสมอารมณ์หมาย\nถ้าเป็นความเคืองขุ่นดูวุ่นวาย สู้ไม่ได้กล่าวแก้ว่าแพ้ เอย ฯ",
+                audio: "ใบที่ยี่สิบสี่.mp3"
+            },
+            {
+                number: 25,
+                text: "ใบที่ยี่สิบห้านี้แจ้งแถลงสาร โชคของท่านเปรียบ ดังสร้างสะพาน\nคิดก่อการสะดวกท่าข้ามทันที เวลานี้ยัง ยุ่งยากลำบาก\nแรกลงรากต้องเหนื่อยเมื่อยเต็มที่ พอแล้วเสร็จสิ่นดี\nสะพานนี่จะช่วยให้หทัยสบาย ลาภของท่านนั้นหนอจงรอก่อน\nไม่ต้องร้อนใจยุ่งมุ่งจิตหมาย ถึง เวลาแล้วจะเห็นไม่เว้นวาย\nยิ่งแก่กายยิ่งสําราญบานเบิกทรวง เนื้อคู่นั้นท่านว่าเป็นคนหม้าย\nอยู่ด้วยกันแล้วสบาย จะหายห่วง พร้อมสินทรัพย์ชายหญิงสิ่งทั้งปวง\nอีกลุล่วง ทุกข์โศกโรคภัย เอยฯ",
+                audio: "ใบที่ยี่สิบห้า.mp3"
+            },
+            {
+                number: 26,
+                text: "ที่ยี่สิบหกความเทียบเปรียบเหมือนว่า พวงบุปผา จวนแย้มแฉล้มสี\nถึงมีทุกข์คงหายสบายดี แต่ว่ามีกรรม ก่อนมารอนราน\nต้องเสงียมเจียมตัวกลัวความผิด จะทํา จิตตรองตรวจอย่าอวดหาญ\nแม้นโอหังบังอาจประมาทการ จะรำคาญเจ็บชําระกําใจ\nอย่ามัวเมาเฝ้าหลงงงชีวิต จงเร่งคิดธรรมดาฟังปราศรัย\nการดับเกิดคู่กันทุกชั้นวัย เหมือนผลไม้ปลูกไว้ไม่ได้กิน\nบุตรในครรภ์เป็นหญิงสิ่ง จะมุ่งลาภฝืดเคืองเรื่องทรัพย์สินที่พึงถอย\nควรทราบน้อยนักจักยลยิน อันระบิลเป็นความกึ่งกึ่ง",
+                audio: "ใบที่ยี่สิบหก.mp3"
+            },
+            {
+                number: 27,
+                text: "ที่ยี่สิบเจ็ดชื่นจิตไม่ผิดพลาด รุกขชาติยามตายวายสังขาร\nต้องนํ้ำค้างรวยรื่นกลับชื่นบาน แตกกิ่งก้านออก ใบวิไลตา\nเหมือนหญิงชายแรกรุ่นดูอุ่นจิต มีชีวิตวายทุกข์ เป็นสุขา\nจักเจริญสมบัติวัฒนา ญาติวงศ์พงศา ก็ยินดี\nถ้าแม้นถามความดีที่มีอยู่ คงต่อสู้ได้แน่ไม่แพ้หนี\nในส่วนลาภบอกตรงว่าคงมี ถามโรคเจ็บไข้ได้ทุเลา\nจะมีผู้เมตตาอนุเคราะห์ บุญเฉพาะให้พบประสบเขา\nแม้นขอ ได้ใบนี้ดีไม่เบา ตามสําเนาชี้แจงแสดง เอย ฯ",
+                audio: "ใบที่ยี่สิบเจ็ด.mp3"
+            },
+            {
+                number: 28,
+                text: "ใบที่ยี่สิบแปดนี้หนอขอทายทัก จงประจักษ์แจ้ง ความตามอักษร\nจงเร่งเพียรทำตัวอย่ามัวนอน ช้า ๆ ก่อน ทำไปคงได้ดี\nพระสมุทรสุดล้ำดูนํ้าลึก จงตรองตรึกให้งามตามวิถี\nทั้งบรรพตสูงเยี่ยมเทียมเมฆี สุรีย์ศรีส่องหล้า ทิวาวัน\nจะทํากิจอย่าคิดว่าเล็กน้อย แม้นบ่อยๆ มากได้ ให้ขยัน\nในใบนี้ถ้าถามเป็นความกัน ดูเชิงชั้นแพ้ความอย่างมงาย\nถามถึงไข้โรคาทีอาพาธว่าร้ายกาจเจ็บหนัก ไม่ยักหาย\nถามถึงลาภว่าดีวจีทาย อุปถัมภ์มากมายอยู่ ใกล้ เอยฯ",
+                audio: "ใบที่ยี่สิบแปด.mp3"
             },
         ];
 
@@ -375,13 +418,9 @@
             audioPlayer.currentTime = 0;
             resetPlayButton();
 
-            if (resultData.audio) {
-                audioPlayer.src = resultData.audio;
-                audioContainer.classList.remove('hidden');
-            } else {
-                audioContainer.classList.add('hidden');
-                audioPlayer.src = "";
-            }
+            // แสดงปุ่มฟังเสียงเสมอ (ระบบจะแจ้งเตือนถ้าไฟล์ยังไม่มา)
+            audioPlayer.src = resultData.audio;
+            audioContainer.classList.remove('hidden');
 
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
@@ -420,7 +459,7 @@
                 const player = document.getElementById('audio-player');
                 fileName = decodeURIComponent(player.src.split('/').pop());
             } catch(e) { fileName = "ไฟล์เสียง"; }
-            alert(`ขออภัย ไม่สามารถเล่นเสียงได้\nกรุณาตรวจสอบชื่อไฟล์ "${fileName}" บน GitHub`);
+            alert(`ขออภัย ไม่สามารถเล่นเสียงได้\nกรุณาตรวจสอบชื่อไฟล์ "${fileName}" บน GitHub ว่าอัปโหลดหรือยัง`);
             resetPlayButton();
         }
 
@@ -445,9 +484,8 @@
             document.getElementById('start-screen').classList.remove('hidden');
         }
 
-        // ฟังก์ชันบันทึกรูปภาพโดยใช้แม่พิมพ์ (Paper Template)
+        // ฟังก์ชันบันทึกรูปภาพโดยใช้แม่พิมพ์
         function saveResultImage() {
-            // ใช้แม่พิมพ์ที่ซ่อนอยู่แทน capture-area
             const captureElement = document.getElementById('paper-siamsi');
             const saveBtn = document.getElementById('save-img-btn');
             const originalBtnContent = saveBtn.innerHTML;
@@ -456,19 +494,18 @@
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังพิมพ์...';
             saveBtn.disabled = true;
 
-            // บังคับให้ขนาดคงที่เพื่อความคมชัด
             const options = {
-                scale: 2, // เพิ่มความละเอียด
+                scale: 2, 
                 useCORS: true,
-                backgroundColor: '#fffaf0', // สีพื้นหลังกระดาษ
-                width: 800, // กว้างเท่ากับแม่พิมพ์
+                backgroundColor: '#fffaf0',
+                width: 800,
                 windowWidth: 800
             };
 
             html2canvas(captureElement, options).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `siamsi-watboonsri-no-${resultNum}.jpg`;
-                link.href = canvas.toDataURL('image/jpeg', 0.9); // บันทึกเป็น JPG คุณภาพ 90%
+                link.href = canvas.toDataURL('image/jpeg', 0.9);
                 link.click();
 
                 saveBtn.innerHTML = originalBtnContent;
@@ -497,5 +534,3 @@
     </script>
 </body>
 </html>
-
-
